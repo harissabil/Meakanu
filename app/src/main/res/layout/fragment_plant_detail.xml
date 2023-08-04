@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.detail.PlantDetailFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="@null"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ToolbarColoredBackArrow">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/psemibold"
+                android:includeFontPadding="false"
+                android:text="Plant Detail"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="21sp" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_plant_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="14dp">
+
+            <ImageView
+                android:id="@+id/iv_plant_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/tv_plant_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_plant_image"
+                tools:text="Water Summer Melon" />
+
+            <TextView
+                android:id="@+id/tv_plant_distribution_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/distribution"
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                android:textColor="@color/green_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_plant_name" />
+
+            <TextView
+                android:id="@+id/tv_plant_distribution_native_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Native:"
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                android:textColor="@color/text_alpha"
+                app:layout_constraintStart_toStartOf="@id/tv_plant_distribution_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_plant_distribution_title" />
+
+            <HorizontalScrollView
+                android:id="@+id/hsv_plant_distribution_native"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_plant_distribution_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_plant_distribution_native_title">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/cg_plant_distribution_native"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingEnd="14dp"
+                    app:singleLine="true" />
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/tv_plant_distribution_introduced_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Introduced:"
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                android:textColor="@color/text_alpha"
+                app:layout_constraintStart_toStartOf="@id/tv_plant_distribution_title"
+                app:layout_constraintTop_toBottomOf="@id/hsv_plant_distribution_native" />
+
+            <HorizontalScrollView
+                android:id="@+id/hsv_plant_distribution_introduced"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_plant_distribution_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_plant_distribution_introduced_title">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/cg_plant_distribution_introduced"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingEnd="14dp"
+                    app:singleLine="true" />
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/tv_plant_scientific_name_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:text="Scientific name:"
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                android:textColor="@color/green_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv_plant_distribution_introduced" />
+
+            <TextView
+                android:id="@+id/tv_plant_scientific_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="@id/tv_plant_scientific_name_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_plant_scientific_name_title"
+                tools:text="Aionionionoi" />
+
+            <TextView
+                android:id="@+id/tv_plant_genus_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:text="Genus:"
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                android:textColor="@color/green_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_plant_scientific_name" />
+
+            <TextView
+                android:id="@+id/tv_plant_genus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="@id/tv_plant_scientific_name_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_plant_genus_title"
+                tools:text="Zanza" />
+
+            <TextView
+                android:id="@+id/tv_plant_family_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:text="Family:"
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                android:textColor="@color/green_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_plant_genus" />
+
+            <TextView
+                android:id="@+id/tv_plant_family"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                app:layout_constraintStart_toStartOf="@id/tv_plant_scientific_name_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_plant_family_title"
+                tools:text="Zanza" />
+
+            <include
+                android:id="@+id/layout_plant_growth"
+                layout="@layout/detail_plant_growth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_plant_family" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="?android:attr/colorBackground"
+        android:gravity="center"
+        tools:visibility="gone">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="visible"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Something went wrong!"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
+        <Button
+            android:id="@+id/btn_retry"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Retry"
+            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+            app:icon="@drawable/ic_refresh"
+            app:iconGravity="textStart" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

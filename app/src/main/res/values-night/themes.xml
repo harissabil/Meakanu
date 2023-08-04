@@ -1,0 +1,32 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Meakanu" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/green_500</item>
+        <item name="colorPrimaryVariant">@color/green_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/green_secondary_200</item>
+        <item name="colorSecondaryVariant">@color/green_secondary_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="actionOverflowMenuStyle">@style/OptionsMenuCustomStyle</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar">?attr/isLightTheme</item>
+    </style>
+
+    <style name="ToolbarColoredBackArrow" parent="Theme.Meakanu">
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="OptionsMenuCustomStyle" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+        <item name="android:overlapAnchor" tools:ignore="NewApi">false</item>
+        <item name="android:dropDownVerticalOffset">4.0dip</item>
+    </style>
+
+</resources>

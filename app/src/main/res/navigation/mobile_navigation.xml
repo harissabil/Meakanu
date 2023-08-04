@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.harissabil.meakanu.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_scanFragment"
+            app:destination="@id/scanFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_historyDetailFragment"
+            app:destination="@id/historyDetailFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_plant"
+        android:name="com.harissabil.meakanu.ui.plant.PlantFragment"
+        android:label="@string/title_plant"
+        tools:layout="@layout/fragment_plant">
+        <action
+            android:id="@+id/action_navigation_plant_to_plantDetailFragment"
+            app:destination="@id/plantDetailFragment" />
+        <action
+            android:id="@+id/action_navigation_plant_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_agri"
+        android:name="com.harissabil.meakanu.ui.agri.AgriFragment"
+        android:label="@string/title_agri"
+        tools:layout="@layout/fragment_agri" >
+        <action
+            android:id="@+id/action_navigation_agri_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/plantDetailFragment"
+        android:name="com.harissabil.meakanu.ui.detail.PlantDetailFragment"
+        android:label="fragment_plant_detail"
+        tools:layout="@layout/fragment_plant_detail" />
+    <fragment
+        android:id="@+id/scanFragment"
+        android:name="com.harissabil.meakanu.ui.scan.ScanFragment"
+        android:label="fragment_scan"
+        tools:layout="@layout/fragment_scan" >
+        <action
+            android:id="@+id/action_scanFragment_to_resultFragment"
+            app:destination="@id/resultFragment"
+            app:popUpTo="@id/scanFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.harissabil.meakanu.ui.result.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_yourImageFragment"
+            app:destination="@id/yourImageFragment" />
+        <action
+            android:id="@+id/action_resultFragment_to_plantWithoutBottomNavFragment"
+            app:destination="@id/plantWithoutBottomNavFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/yourImageFragment"
+        android:name="com.harissabil.meakanu.ui.result.YourImageFragment"
+        android:label="fragment_your_image"
+        tools:layout="@layout/fragment_your_image" />
+    <fragment
+        android:id="@+id/plantWithoutBottomNavFragment"
+        android:name="com.harissabil.meakanu.ui.plant.PlantWithoutBottomNavFragment"
+        android:label="fragment_plant_without_bottom_nav"
+        tools:layout="@layout/fragment_plant_without_bottom_nav" >
+        <action
+            android:id="@+id/action_plantWithoutBottomNavFragment_to_plantDetailFragment"
+            app:destination="@id/plantDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyDetailFragment"
+        android:name="com.harissabil.meakanu.ui.home.HistoryDetailFragment"
+        android:label="fragment_history_detail"
+        tools:layout="@layout/fragment_history_detail" >
+        <action
+            android:id="@+id/action_historyDetailFragment_to_yourImageFragment"
+            app:destination="@id/yourImageFragment" />
+        <action
+            android:id="@+id/action_historyDetailFragment_to_resultFragment"
+            app:popUpTo="@id/historyDetailFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/resultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.harissabil.meakanu.ui.about.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+</navigation>

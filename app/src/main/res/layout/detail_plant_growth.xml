@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/plant_detail_verticals"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/plant_growth">
+
+    <LinearLayout
+        android:id="@+id/plant_detail_soil_nutriments_ll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Soil Nutriments"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            android:textColor="@color/text_alpha" />
+
+        <TextView
+            android:id="@+id/tv_plant_detail_soil_nutriments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+
+            android:textColor="@color/not_black"
+            tools:text="800mb" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/plant_detail_divider_1"
+        android:layout_width="1dp"
+        android:layout_height="32dp"
+        android:background="@color/light_green_100" />
+
+    <LinearLayout
+        android:id="@+id/plant_detail_soil_salinity_ll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Soil Salinity"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            android:textColor="@color/text_alpha" />
+
+        <TextView
+            android:id="@+id/tv_plant_detail_soil_salinity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+
+            android:textColor="@color/not_black"
+
+            tools:text="4.3 Km" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/plant_detail_divider_2"
+        android:layout_width="1dp"
+        android:layout_height="32dp"
+        android:background="@color/light_green_100" />
+
+    <LinearLayout
+        android:id="@+id/plant_detail_soil_humidity_ll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Soil Humidity"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            android:textColor="@color/text_alpha" />
+
+        <TextView
+            android:id="@+id/tv_plant_detail_soil_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="@color/not_black"
+            tools:text="87%" />
+    </LinearLayout>
+
+    <!--2-->
+
+    <LinearLayout
+        android:id="@+id/plant_detail_ph_min_ll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pH Min"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            android:textColor="@color/text_alpha" />
+
+        <TextView
+            android:id="@+id/tv_plant_detail_ph_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+
+            android:textColor="@color/not_black"
+            tools:text="800mb" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/plant_detail_divider_21"
+        android:layout_width="1dp"
+        android:layout_height="32dp"
+        android:background="@color/light_green_100" />
+
+    <LinearLayout
+        android:id="@+id/plant_detail_ph_max_ll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pH max"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            android:textColor="@color/text_alpha" />
+
+        <TextView
+            android:id="@+id/tv_plant_detail_ph_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+
+            android:textColor="@color/not_black"
+
+            tools:text="4.3 Km" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/plant_detail_divider_22"
+        android:layout_width="1dp"
+        android:layout_height="32dp"
+        android:background="@color/light_green_100" />
+
+    <LinearLayout
+        android:id="@+id/plant_detail_light_ll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Light"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            android:textColor="@color/text_alpha" />
+
+        <TextView
+            android:id="@+id/tv_plant_detail_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="@color/not_black"
+            tools:text="87%" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:constraint_referenced_ids="plant_detail_soil_nutriments_ll,plant_detail_divider_1,plant_detail_soil_salinity_ll,plant_detail_divider_2,plant_detail_soil_humidity_ll"
+        app:flow_horizontalAlign="center"
+
+        app:flow_horizontalBias="0"
+        app:flow_horizontalGap="8dp"
+        app:flow_horizontalStyle="spread"
+
+        app:flow_verticalBias="0"
+        app:flow_wrapMode="chain"
+        app:layout_constraintBottom_toTopOf="@+id/flow2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:constraint_referenced_ids="plant_detail_ph_min_ll,plant_detail_divider_21,plant_detail_ph_max_ll,plant_detail_divider_22,plant_detail_light_ll"
+        app:flow_horizontalAlign="center"
+
+        app:flow_horizontalBias="0"
+        app:flow_horizontalGap="8dp"
+        app:flow_horizontalStyle="spread"
+
+        app:flow_verticalBias="0"
+        app:flow_wrapMode="chain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flow1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
