@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/navigation_agri"
-        android:icon="@drawable/ic_agri_24"
+        android:icon="@drawable/ic_news"
         android:title="@string/title_agri" />
 
 </menu>

@@ -2,7 +2,7 @@
     <string name="app_name">Meakanu</string>
     <string name="title_home">Home</string>
     <string name="title_plant">Plant</string>
-    <string name="title_agri">Agri</string>
+    <string name="title_agri">News</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="meakanu">Meakanu</string>
@@ -16,34 +16,4 @@
         <item>Bark</item>
     </string-array>
     <string name="version">Version %1$s</string>
-    <string-array name="data_title">
-        <item>What is Agriculture?</item>
-        <item>Why Is Agriculture Important? Benefits and Its Role</item>
-        <item>Why Is Agricultural Education Important?</item>
-        <item>Impact of Sustainable Agriculture and Farming Practices</item>
-        <item>Do You Need a Degree to Start Your Career in Agriculture?</item>
-        <item>Should I Drop Out of College to Become a Farmer?</item>
-        <item>Farming 101 – How to be a Farmer –</item>
-        <item>Pest Database</item>
-    </string-array>
-    <string-array name="data_source">
-        <item>twinkl.co.id</item>
-        <item>MARYVILLE UNIVERSITY</item>
-        <item>CropCare</item>
-        <item>World Wildlife Fund</item>
-        <item>Agricultural Recruitment Specialists</item>
-        <item>Quora</item>
-        <item>Wikifarmer</item>
-        <item>Insecticide Resistance Action Committee</item>
-    </string-array>
-    <string-array name="data_link">
-        <item>https://www.twinkl.co.id/teaching-wiki/agriculture</item>
-        <item>https://online.maryville.edu/blog/why-is-agriculture-important/</item>
-        <item>https://cropcareequipment.com/blog/importance-of-agricultural-education/</item>
-        <item>https://www.worldwildlife.org/industries/sustainable-agriculture</item>
-        <item>https://www.agrirs.co.uk/blog/2018/11/do-you-need-a-degree-to-start-your-career-in-agriculture?source=google.com</item>
-        <item>https://www.quora.com/Should-I-drop-out-of-college-to-become-a-farmer</item>
-        <item>https://wikifarmer.com/farming-101-how-to-be-a-farmer-step-by-step-guide/</item>
-        <item>https://irac-online.org/pest-library/</item>
-    </string-array>
 </resources>

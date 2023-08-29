@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.harissabil.meakanu.data.PlantRepository
 import com.harissabil.meakanu.di.Injection
+import com.harissabil.meakanu.ui.agri.AgriViewModel
 import com.harissabil.meakanu.ui.detail.PlantDetailViewModel
 import com.harissabil.meakanu.ui.home.HistoryDetailViewModel
 import com.harissabil.meakanu.ui.home.HomeViewModel
@@ -32,6 +33,8 @@ class ViewModelFactory(private val repository: PlantRepository) :
             ResultViewModel(this.repository) as T
         } else if (modelClass.isAssignableFrom(HistoryDetailViewModel::class.java)) {
             HistoryDetailViewModel(this.repository) as T
+        } else if (modelClass.isAssignableFrom(AgriViewModel::class.java)) {
+            AgriViewModel(this.repository) as T
         } else {
             throw IllegalArgumentException("ViewModel Not Found: ${modelClass.name}")
         }

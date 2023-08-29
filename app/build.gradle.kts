@@ -13,14 +13,22 @@ android {
         applicationId = "com.harissabil.meakanu"
         minSdk = 26
         targetSdk = 33
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 6
+        versionName = "1.0.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL_TREFLE", "\"https://trefle.io/api/v1/\"")
+        buildConfigField(
+            "String",
+            "API_KEY_TREFLE",
+            "\"PqklXosE29uCKj71w4d4fmUtpJAAcP0tI8H4j2O3fuM\""
+        )
+
         buildConfigField("String", "BASE_URL_PLANTNET", "\"https://my-api.plantnet.org/v2/\"")
-        buildConfigField("String", "API_KEY_TREFLE", "\"PqklXosE29uCKj71w4d4fmUtpJAAcP0tI8H4j2O3fuM\"")
         buildConfigField("String", "API_KEY_PLANTNET", "\"2b10Qhs7Lxsa11Uuuy6Jhyd0k\"")
+
+        buildConfigField("String", "BASE_URL_NEWS", "\"https://newsapi.org/v2/\"")
+        buildConfigField("String", "API_KEY_NEWS", "\"2a53338ab65f4ab181e7be37a0b5e7d6\"")
     }
 
     buildTypes {
@@ -94,4 +102,10 @@ dependencies {
 
     // Splashscreen
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    // Paging 3
+    implementation("androidx.paging:paging-runtime-ktx:3.2.0")
+
+    // uCrop
+    implementation("com.github.Frosch2010:uCrop-n-Edit:3.0.4")
 }

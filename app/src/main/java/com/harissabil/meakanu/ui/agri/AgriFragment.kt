@@ -1,5 +1,8 @@
 package com.harissabil.meakanu.ui.agri
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -11,18 +14,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.harissabil.meakanu.R
 import com.harissabil.meakanu.databinding.FragmentAgriBinding
+import com.harissabil.meakanu.ui.ViewModelFactory
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class AgriFragment : Fragment() {
 
     private var _binding: FragmentAgriBinding? = null
 
-    private val list = ArrayList<AgriInfo>()
+    private val agriViewModel by viewModels<AgriViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -33,8 +43,6 @@ class AgriFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val agriViewModel =
-            ViewModelProvider(this)[AgriViewModel::class.java]
 
         _binding = FragmentAgriBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -48,19 +56,12 @@ class AgriFragment : Fragment() {
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayShowTitleEnabled(false)
 
-        list.addAll(getListAgriInfo())
-
-        binding.apply {
-            rvAgri.setHasFixedSize(true)
-            rvAgri.layoutManager = LinearLayoutManager(requireContext())
-            rvAgri.adapter = ListAgriAdapter(list)
-        }
-
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.toolbar_option_menu, menu)
             }
+
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.action_about -> {
@@ -69,26 +70,67 @@ class AgriFragment : Fragment() {
                         )
                         true
                     }
+
                     else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        getData()
     }
 
-    private fun getListAgriInfo(): ArrayList<AgriInfo> {
-        val dataTitle = resources.getStringArray(R.array.data_title)
-        val dataSource = resources.getStringArray(R.array.data_source)
-        val dataLink = resources.getStringArray(R.array.data_link)
-        val listAgriInfo = ArrayList<AgriInfo>()
-        for (i in dataTitle.indices) {
-            val agriInfo = AgriInfo(
-                dataTitle[i],
-                dataSource[i],
-                dataLink[i]
-            )
-            listAgriInfo.add(agriInfo)
+    private fun fetchData() {
+        val adapter = ListAgriAdapter()
+        binding.rvAgri.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvAgri.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
+
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest { loadStates ->
+                if (loadStates.refresh is LoadState.Loading) {
+                    binding.progressBar.visibility = View.VISIBLE
+                } else {
+                    binding.progressBar.visibility = View.GONE
+                    if (loadStates.refresh is LoadState.Error) {
+                        if (adapter.itemCount < 1) {
+                            binding.llError.visibility = View.VISIBLE
+                            binding.btnRetry.setOnClickListener {
+                                fetchData() // Retry fetching data
+                            }
+                        } else {
+                            binding.llError.visibility = View.GONE
+                        }
+                    }
+                }
+            }
         }
-        return listAgriInfo
+
+        agriViewModel.news.observe(viewLifecycleOwner) {
+            adapter.submitData(lifecycle, it)
+        }
+    }
+
+    private fun getData() {
+        if (isNetworkAvailable()) {
+            fetchData()
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.llError.visibility = View.VISIBLE
+            binding.btnRetry.setOnClickListener {
+                getData() // Retry fetching data
+            }
+        }
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val networkCapabilities = connectivityManager.activeNetwork ?: return false
+        val actNw = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+        return actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
     }
 
     override fun onDestroyView() {

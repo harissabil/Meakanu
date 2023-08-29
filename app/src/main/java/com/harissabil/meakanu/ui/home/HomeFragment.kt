@@ -19,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.harissabil.meakanu.R
@@ -35,6 +36,8 @@ class HomeFragment : Fragment(), MoreClicked {
     private val homeViewModel by viewModels<HomeViewModel> {
         ViewModelFactory.getInstance(requireActivity())
     }
+
+    private lateinit var historyListAdapter: HistoryListAdapter
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -57,9 +60,13 @@ class HomeFragment : Fragment(), MoreClicked {
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayShowTitleEnabled(false)
 
+        historyListAdapter = HistoryListAdapter(this)
+
         binding.rvHistory.setHasFixedSize(false)
-        binding.rvHistory.isNestedScrollingEnabled = false
         binding.rvHistory.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvHistory.isNestedScrollingEnabled = false
+        binding.rvHistory.adapter = historyListAdapter
+        binding.rvHistory.adapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
@@ -83,9 +90,9 @@ class HomeFragment : Fragment(), MoreClicked {
             homeViewModel.clickBanner()
         }
 
-        homeViewModel.getLatest().observe(viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
-                binding.rvHistory.adapter = HistoryListAdapter(it, this)
+        homeViewModel.getLatest().observe(viewLifecycleOwner) { history ->
+            if (!history.isNullOrEmpty()) {
+                historyListAdapter.submitList(history)
                 binding.rvHistory.visibility = View.VISIBLE
                 binding.tvNoHistory.visibility = View.GONE
             } else {
@@ -106,7 +113,7 @@ class HomeFragment : Fragment(), MoreClicked {
         }
 
         binding.cvScan.setOnClickListener {
-            binding.cvScan.findNavController().navigate(com.harissabil.meakanu.R.id.action_navigation_home_to_scanFragment)
+            binding.cvScan.findNavController().navigate(R.id.action_navigation_home_to_scanFragment)
         }
     }
 
@@ -138,9 +145,9 @@ class HomeFragment : Fragment(), MoreClicked {
         builder.setTitle("Delete observation?")
         builder.setMessage("Observation will be permanently removed from your device.")
         builder.setPositiveButton("Delete") { _, _ ->
-            homeViewModel.delete(plant)
             if (!plant.image.isNullOrBlank()) {
                 deleteImage(plant.image!!)
+            homeViewModel.delete(plant)
             }
             Snackbar.make(binding.root, "Observation deleted", Snackbar.LENGTH_SHORT).show()
         }

@@ -157,3 +157,19 @@ fun localiseDate(dateInput: String): String {
 
     return dateString
 }
+
+fun localiseeNewsDate(dateInput: String) : String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+    val dateString: String
+    try {
+        val date = sdf.parse(dateInput)
+        val dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
+        dateString = dateFormat.format(date!!)
+    } catch (e: ParseException) {
+        Log.e("DATE", "Error parsing date", e)
+        e.printStackTrace()
+        return dateInput
+    }
+
+    return dateString
+}

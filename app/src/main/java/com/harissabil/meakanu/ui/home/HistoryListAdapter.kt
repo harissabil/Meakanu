@@ -1,11 +1,14 @@
 package com.harissabil.meakanu.ui.home
 
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.harissabil.meakanu.R
@@ -15,11 +18,74 @@ import com.harissabil.meakanu.helper.MoreClicked
 import com.harissabil.meakanu.helper.localiseDate
 
 class HistoryListAdapter(
-    private val historyList: List<PlantEntity>,
     private val moreClicked: MoreClicked
 ) :
-    RecyclerView.Adapter<HistoryListAdapter.ViewHolder>() {
-    class ViewHolder(var binding: ItemHistoryBinding) : RecyclerView.ViewHolder(binding.root)
+    ListAdapter<PlantEntity, HistoryListAdapter.ViewHolder>(DiffCallback()) {
+
+    class DiffCallback : DiffUtil.ItemCallback<PlantEntity>() {
+
+        override fun areItemsTheSame(oldItem: PlantEntity, newItem: PlantEntity):
+                Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: PlantEntity, newItem: PlantEntity):
+                Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    class ViewHolder(private val binding: ItemHistoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
+        fun bind(item: PlantEntity, moreClicked: MoreClicked) {
+            binding.apply {
+                tvDate.text = localiseDate(item.date!!)
+                ivPlantImage.load(item.image)
+                when (item.organ) {
+                    "leaf" -> {
+                        chipOrgan.setTextColor(itemView.context.getColor(R.color.leaf))
+                    }
+
+                    "flower" -> {
+                        chipOrgan.setTextColor(itemView.context.getColor(R.color.flower))
+                    }
+
+                    "fruit" -> {
+                        chipOrgan.setTextColor(itemView.context.getColor(R.color.fruit))
+                    }
+
+                    "bark" -> {
+                        chipOrgan.setTextColor(itemView.context.getColor(R.color.bark))
+                    }
+                }
+                chipOrgan.text = item.organ
+                if (item.scientificNameWithoutAuthor != null) {
+                    tvPlantScientificWitoutAuthor.text = item.scientificNameWithoutAuthor
+                } else {
+                    tvPlantScientificWitoutAuthor.text = "Undetermined species"
+                    tvPlantScientificWitoutAuthor.typeface = Typeface.DEFAULT
+                    tvPlantCommonName.visibility = View.GONE
+                }
+                tvPlantCommonName.text = if (item.commonName != null) item.commonName else ""
+
+                cvMore.setOnClickListener {
+                    moreClicked.popUpMenu(it, item)
+                }
+
+                cvPlant.setOnClickListener {
+
+                    val mBundle = Bundle()
+                    mBundle.putParcelable("data", item)
+
+                    cvPlant.findNavController().navigate(
+                        R.id.action_navigation_home_to_historyDetailFragment,
+                        mBundle
+                    )
+                }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
@@ -27,55 +93,8 @@ class HistoryListAdapter(
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = historyList.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val list = historyList[position]
-        holder.binding.apply {
-            tvDate.text = localiseDate(list.date!!)
-            ivPlantImage.load(list.image)
-            when (list.organ) {
-                "leaf" -> {
-                    chipOrgan.setTextColor(holder.itemView.context.getColor(R.color.leaf))
-                }
-
-                "flower" -> {
-                    chipOrgan.setTextColor(holder.itemView.context.getColor(R.color.flower))
-                }
-
-                "fruit" -> {
-                    chipOrgan.setTextColor(holder.itemView.context.getColor(R.color.fruit))
-                }
-
-                "bark" -> {
-                    chipOrgan.setTextColor(holder.itemView.context.getColor(R.color.bark))
-                }
-            }
-            chipOrgan.text = list.organ
-            if (list.scientificNameWithoutAuthor != null) {
-                tvPlantScientificWitoutAuthor.text = list.scientificNameWithoutAuthor
-            } else {
-                tvPlantScientificWitoutAuthor.text = "Undetermined species"
-                tvPlantScientificWitoutAuthor.typeface = Typeface.DEFAULT
-                tvPlantCommonName.visibility = View.GONE
-            }
-            tvPlantCommonName.text = if (list.commonName != null) list.commonName else ""
-
-            cvMore.setOnClickListener {
-                moreClicked.popUpMenu(it, list)
-            }
-
-            cvPlant.setOnClickListener {
-
-                val mBundle = Bundle()
-                mBundle.putParcelable("data", list)
-
-                cvPlant.findNavController().navigate(
-                    R.id.action_navigation_home_to_historyDetailFragment,
-                    mBundle
-                )
-            }
-        }
+        holder.bind(getItem(position), moreClicked)
     }
 
 }

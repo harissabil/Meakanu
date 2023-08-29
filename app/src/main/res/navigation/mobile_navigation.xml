@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_navigation_agri_to_aboutFragment"
             app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_navigation_agri_to_newsDetailFragment"
+            app:destination="@id/newsDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/plantDetailFragment"
@@ -104,4 +107,8 @@
         android:name="com.harissabil.meakanu.ui.about.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/newsDetailFragment"
+        android:name="com.harissabil.meakanu.ui.news_detail.NewsDetailFragment"
+        android:label="NewsDetailFragment" />
 </navigation>

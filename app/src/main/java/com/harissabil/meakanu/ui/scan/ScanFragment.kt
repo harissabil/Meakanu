@@ -1,9 +1,9 @@
 package com.harissabil.meakanu.ui.scan
 
 import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -29,6 +29,7 @@ import com.harissabil.meakanu.helper.reduceFileImage
 import com.harissabil.meakanu.helper.uriToFile
 import com.harissabil.meakanu.ui.ViewModelFactory
 import com.harissabil.meakanu.ui.result.ResultFragment.Companion.TYPE_HISTORY
+import com.yalantis.ucrop.UCrop
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -82,7 +83,10 @@ class ScanFragment : Fragment() {
 
             myFile.let { file ->
                 getFile = file
-                binding.ivPreview.setImageBitmap(BitmapFactory.decodeFile(file.path))
+//                binding.ivPreview.setImageBitmap(BitmapFactory.decodeFile(file.path))
+//                binding.ivPreview.tag = "updatedTag"
+
+                startCrop(Uri.fromFile(file))
             }
         }
     }
@@ -95,11 +99,39 @@ class ScanFragment : Fragment() {
             selectedImg.let { uri ->
                 val myFile = uriToFile(uri, requireContext())
                 getFile = myFile
-                binding.ivPreview.setImageURI(uri)
-                binding.ivPreview.tag = "updatedTag"
+//                binding.ivPreview.setImageURI(uri)
+//                binding.ivPreview.tag = "updatedTag"
+
+                startCrop(Uri.fromFile(myFile))
             }
         }
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            val imageUri: Uri = UCrop.getOutput(data!!)!!
+            getFile = uriToFile(imageUri, requireContext())
+            binding.ivPreview.setImageURI(imageUri)
+            binding.ivPreview.tag = "updatedTag"
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            val cropError = UCrop.getError(data!!)
+            Toast.makeText(requireContext(), cropError!!.message, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private val activityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val imageUri: Uri = UCrop.getOutput(result.data!!)!!
+                getFile = uriToFile(imageUri, requireContext())
+                binding.ivPreview.setImageURI(imageUri)
+                binding.ivPreview.tag = "updatedTag"
+            } else if (result.resultCode == UCrop.RESULT_ERROR) {
+                val cropError = UCrop.getError(result.data!!)
+                Toast.makeText(requireContext(), cropError!!.message, Toast.LENGTH_LONG).show()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -118,6 +150,7 @@ class ScanFragment : Fragment() {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
+                //
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -172,6 +205,20 @@ class ScanFragment : Fragment() {
         launcherIntentGallery.launch(chooser)
     }
 
+    private fun startCrop(uri: Uri) {
+        val destinationUri = Uri.fromFile(getFile)
+
+        val options = UCrop.Options()
+        options.setToolbarColor(ContextCompat.getColor(requireContext(), R.color.green_500))
+        options.setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.green_700))
+        options.setToolbarWidgetColor(ContextCompat.getColor(requireContext(), R.color.white))
+        options.setActiveControlsWidgetColor(ContextCompat.getColor(requireContext(), R.color.green_500))
+
+        UCrop.of(uri, destinationUri)
+            .withOptions(options)
+            .start(requireContext(), this)
+    }
+
     private fun uploadImage() {
         if (binding.ivPreview.tag == "updatedTag") {
             if (getFile != null) {
@@ -200,7 +247,8 @@ class ScanFragment : Fragment() {
                         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
                         val current = LocalDateTime.now().format(formatter)
 
-                        val plant = PlantEntity(date = current, image = file.absolutePath, organ = organ)
+                        val plant =
+                            PlantEntity(date = current, image = file.absolutePath, organ = organ)
                         scanViewModel.insert(plant)
 
                         binding.root.findNavController().navigate(
