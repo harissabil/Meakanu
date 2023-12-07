@@ -7,17 +7,17 @@ plugins {
 
 android {
     namespace = "com.harissabil.meakanu"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.harissabil.meakanu"
         minSdk = 26
-        targetSdk = 33
-        versionCode = 6
-        versionName = "1.0.5"
+        targetSdk = 34
+        versionCode = 9
+        versionName = "1.0.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL_TREFLE", "\"https://trefle.io/api/v1/\"")
+        buildConfigField("String", "BASE_URL_TREFLE", "\"http://trefle.io/api/v1/\"")
         buildConfigField(
             "String",
             "API_KEY_TREFLE",

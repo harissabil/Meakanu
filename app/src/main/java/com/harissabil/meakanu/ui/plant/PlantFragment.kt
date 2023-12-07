@@ -125,7 +125,13 @@ class PlantFragment : Fragment() {
             }
         })
 
-        binding.btnRetry.setOnClickListener { plantViewModel.byQuery(binding.svSearch.query.toString()) }
+        binding.btnRetry.setOnClickListener {
+            if (binding.svSearch.query.isNotBlank()) {
+                plantViewModel.byQuery(binding.svSearch.query.toString())
+            } else {
+                plantViewModel.byQuery("carrot")
+            }
+        }
     }
 
     override fun onDestroyView() {

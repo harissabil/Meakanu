@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.harissabil.meakanu.R
@@ -81,8 +82,18 @@ class ResultFragment : Fragment(), ConfirmButton {
                         )
                     }
 
-                    rvResult.layoutManager = LinearLayoutManager(requireContext())
+                    val layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+                    rvResult.setHasFixedSize(true)
+                    rvResult.layoutManager = layoutManager
                     rvResult.adapter = ResultListAdapter(result!!.results, this@ResultFragment)
+                    rvResult.addItemDecoration(
+                        DividerItemDecoration(
+                            requireContext(),
+                            layoutManager.orientation
+                        )
+                    )
                 }
             } else {
                 binding.apply {
@@ -100,9 +111,18 @@ class ResultFragment : Fragment(), ConfirmButton {
                             extras
                         )
                     }
+                    val layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-                    rvResult.layoutManager = LinearLayoutManager(requireContext())
+                    rvResult.setHasFixedSize(true)
+                    rvResult.layoutManager = layoutManager
                     rvResult.adapter = ResultListAdapter(result!!.results, this@ResultFragment)
+                    rvResult.addItemDecoration(
+                        DividerItemDecoration(
+                            requireContext(),
+                            layoutManager.orientation
+                        )
+                    )
                 }
             }
         }
@@ -140,7 +160,7 @@ class ResultFragment : Fragment(), ConfirmButton {
             }
             findNavController().popBackStack()
         } else {
-            runBlocking(Dispatchers.IO)  {
+            runBlocking(Dispatchers.IO) {
                 val plant = async { resultViewModel.getLastRow() }
                 resultViewModel.update(
                     PlantEntity(
