@@ -65,12 +65,12 @@ API_KEY_NEWS = "your key here"
 4. Get your API keys from [Trefle](https://trefle.io/), [PlantNet](https://my.plantnet.org/), and [News API](https://newsapi.org/), and replace the placeholders with your keys.
 5. Sync the project with Gradle and run the app on an Android emulator or a physical Android device.
 
-### Open Source Credits
+## Open Source Credits
 
 - [PlantNet](https://my.plantnet.org/) for plant identification.
 - [Trefle](https://trefle.io/) for plant data.
 - [News API](https://newsapi.org/) for plant articles.
 
-### License
+## License
 
 Meakanu is open-source and released under the [MIT License](LICENSE).
