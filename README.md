@@ -19,7 +19,7 @@ This project was a submission for [IDCamp X KADIN Challenge 2023](https://idcamp
     </tr>
     <tr>
       <td><img src="assets/screenshot/plant.jpg?raw=true"/></td>
-      <td><img src="assets/screenshot/detail.png?raw=true"/></td>
+      <td><img src="assets/screenshot/detail.jpg?raw=true"/></td>
       <td><img src="assets/screenshot/articles.jpg?raw=true"/></td>
     </tr>
   </tbody>
