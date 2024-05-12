@@ -21,15 +21,64 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class com.harissabil.meakanu.data.local.* { *; }
--keep class com.harissabil.meakanu.data.remote.response.* { *; }
--keep class com.harissabil.meakanu.glide.* { *; }
+-keep class com.harissabil.meakanu.data.remote.response.news.* { *; }
+-keep class com.harissabil.meakanu.data.remote.response.plantnet.* { *; }
+-keep class com.harissabil.meakanu.data.remote.response.trefle.* { *; }
 -keep class com.harissabil.meakanu.di.* { *; }
+-keep class com.harissabil.meakanu.module.* { *; }
+-keep class com.harissabil.meakanu.helper.* { *; }
 -keep class retrofit.** { *; }
 -keep class retrofit2.** { *; }
 -keep class okio.** { *; }
 -keep class okhttp3.** { *; }
 -keep class com.google.gson.** { *; }
 -keep class * extends androidx.fragment.app.Fragment{}
--keep class androidx.navigation.fragment.NavHostFragment
+-keepnames class androidx.navigation.fragment.NavHostFragment
 -keepnames class * extends android.os.Parcelable
 -keepnames class * extends java.io.Serializable
+
+# Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
+# EnclosingMethod is required to use InnerClasses.
+-keepattributes Signature, InnerClasses, EnclosingMethod
+
+# Retrofit does reflection on method and parameter annotations.
+-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+
+# Keep annotation default values (e.g., retrofit2.http.Field.encoded).
+-keepattributes AnnotationDefault
+
+# Retain service method parameters when optimizing.
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+
+# Ignore JSR 305 annotations for embedding nullability information.
+-dontwarn javax.annotation.**
+
+# Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
+-dontwarn kotlin.Unit
+
+# Top-level functions that can only be used by Kotlin.
+-dontwarn retrofit2.KotlinExtensions
+-dontwarn retrofit2.KotlinExtensions$*
+
+# With R8 full mode, it sees no subtypes of Retrofit interfaces since they are created with a Proxy
+# and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
+-if interface * { @retrofit2.http.* <methods>; }
+-keep,allowobfuscation interface <1>
+
+# Keep inherited services.
+-if interface * { @retrofit2.http.* <methods>; }
+-keep,allowobfuscation interface * extends <1>
+
+# With R8 full mode generic signatures are stripped for classes that are not
+# kept. Suspend functions are wrapped in continuations where the type argument
+# is used.
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+
+# R8 full mode strips generic signatures from return types if not kept.
+-if interface * { @retrofit2.http.* public *** *(...); }
+-keep,allowoptimization,allowshrinking,allowobfuscation class <3>
+
+# With R8 full mode generic signatures are stripped for classes that are not kept.
+-keep,allowobfuscation,allowshrinking class retrofit2.Response

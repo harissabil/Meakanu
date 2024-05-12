@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.harissabil.meakanu.R
 import com.harissabil.meakanu.data.remote.response.trefle.DataItem
 import com.harissabil.meakanu.databinding.ItemSearchPlantsBinding
-import com.harissabil.meakanu.glide.GlideApp
+import com.harissabil.meakanu.module.GlideApp
 
 class SearchListAdater(private val plantList: List<DataItem>) :
     RecyclerView.Adapter<SearchListAdater.ViewHolder>() {
@@ -28,7 +28,7 @@ class SearchListAdater(private val plantList: List<DataItem>) :
             tvPlantCommonNameSearch.text = list.commonName
             GlideApp.with(holder.itemView.context)
                 .load(list.imageUrl)
-                .placeholder(R.drawable.placeholder_meakanu)
+                .placeholder(R.drawable.ic_launcher_foreground_splash)
                 .into(ivPlantImage)
             tvPlantScientificName.text = list.scientificName
             tvPlantFamily.text = list.family

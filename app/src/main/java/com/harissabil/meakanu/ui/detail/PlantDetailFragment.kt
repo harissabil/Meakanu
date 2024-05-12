@@ -12,7 +12,7 @@ import com.google.android.material.chip.ChipGroup
 import com.harissabil.meakanu.R
 import com.harissabil.meakanu.databinding.ChipPlantDistributionBinding
 import com.harissabil.meakanu.databinding.FragmentPlantDetailBinding
-import com.harissabil.meakanu.glide.GlideApp
+import com.harissabil.meakanu.module.GlideApp
 import com.harissabil.meakanu.ui.ViewModelFactory
 
 
@@ -63,7 +63,7 @@ class PlantDetailFragment : Fragment() {
                 binding.apply {
                     GlideApp.with(requireContext())
                         .load(response.data.imageUrl)
-                        .placeholder(R.drawable.placeholder_meakanu)
+                        .placeholder(R.drawable.ic_launcher_foreground_splash)
                         .into(ivPlantImage)
                     tvPlantName.text = response.data.commonName
                     tvPlantScientificName.text = response.data.scientificName
@@ -73,7 +73,10 @@ class PlantDetailFragment : Fragment() {
                         tvPlantDistributionNativeTitle.visibility = View.GONE
                         cgPlantDistributionNative.visibility = View.GONE
                     } else {
-                        addChips(cgPlantDistributionNative, response.data.mainSpecies.distribution.native)
+                        addChips(
+                            cgPlantDistributionNative,
+                            response.data.mainSpecies.distribution.native
+                        )
                     }
                     if (response.data.mainSpecies.distribution.introduced == null) {
                         tvPlantDistributionIntroducedTitle.visibility = View.GONE
@@ -117,7 +120,8 @@ class PlantDetailFragment : Fragment() {
                             tvPlantDetailPhMax.text = "-"
                         }
                         if (response.data.mainSpecies.growth.light != null) {
-                            tvPlantDetailLight.text = response.data.mainSpecies.growth.light.toString()
+                            tvPlantDetailLight.text =
+                                response.data.mainSpecies.growth.light.toString()
                         } else {
                             tvPlantDetailLight.text = "-"
                         }

@@ -1,11 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- regular -->
     <font
-        android:fontStyle="normal"
-        android:fontWeight="400"
-        android:font="@font/pregular" />
+        app:font="@font/pregular"
+        app:fontStyle="normal"
+        app:fontWeight="400" />
+
+    <!-- italic -->
     <font
-        android:fontStyle="italic"
-        android:fontWeight="400"
-        android:font="@font/pitalic" />
+        app:font="@font/pitalic"
+        app:fontStyle="italic"
+        app:fontWeight="400" />
+
+    <!-- bold -->
+    <font
+        app:font="@font/psemibold"
+        app:fontStyle="normal"
+        app:fontWeight="700" />
+
 </font-family>

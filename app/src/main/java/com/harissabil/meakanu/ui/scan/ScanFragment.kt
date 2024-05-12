@@ -120,18 +120,18 @@ class ScanFragment : Fragment() {
         }
     }
 
-    private val activityResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val imageUri: Uri = UCrop.getOutput(result.data!!)!!
-                getFile = uriToFile(imageUri, requireContext())
-                binding.ivPreview.setImageURI(imageUri)
-                binding.ivPreview.tag = "updatedTag"
-            } else if (result.resultCode == UCrop.RESULT_ERROR) {
-                val cropError = UCrop.getError(result.data!!)
-                Toast.makeText(requireContext(), cropError!!.message, Toast.LENGTH_LONG).show()
-            }
-        }
+//    private val activityResultLauncher =
+//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//            if (result.resultCode == RESULT_OK) {
+//                val imageUri: Uri = UCrop.getOutput(result.data!!)!!
+//                getFile = uriToFile(imageUri, requireContext())
+//                binding.ivPreview.setImageURI(imageUri)
+//                binding.ivPreview.tag = "updatedTag"
+//            } else if (result.resultCode == UCrop.RESULT_ERROR) {
+//                val cropError = UCrop.getError(result.data!!)
+//                Toast.makeText(requireContext(), cropError!!.message, Toast.LENGTH_LONG).show()
+//            }
+//        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -175,7 +175,10 @@ class ScanFragment : Fragment() {
 
         binding.apply {
             spOrgan.lifecycleOwner = this@ScanFragment
-            btnCamera.setOnClickListener { startCamera() }
+            btnCamera.setOnClickListener {
+                if (allPermissionsGranted()) startCamera()
+                else requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+            }
             btnGallery.setOnClickListener { startGallery() }
             btnUpload.setOnClickListener { uploadImage() }
         }

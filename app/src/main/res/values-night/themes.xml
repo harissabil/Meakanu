@@ -16,7 +16,7 @@
         <item name="android:includeFontPadding">false</item>
         <item name="actionOverflowMenuStyle">@style/OptionsMenuCustomStyle</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowLightNavigationBar">?attr/isLightTheme</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <style name="ToolbarColoredBackArrow" parent="Theme.Meakanu">

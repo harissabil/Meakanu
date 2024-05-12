@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.harissabil.meakanu.helper
 
 import android.app.Application
@@ -158,7 +160,7 @@ fun localiseDate(dateInput: String): String {
     return dateString
 }
 
-fun localiseeNewsDate(dateInput: String) : String {
+fun localiseeNewsDate(dateInput: String): String {
     val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
     val dateString: String
     try {

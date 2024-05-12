@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface ApiServiceNews {
     @GET("everything")
     suspend fun getNews(
-        @Query("q") q: String = "plant",
+        @Query("q") q: String = "plant AND crop",
         @Query("apiKey") apiKey: String,
         @Query("page") page: Int,
         @Query("pageSize") pageSize: Int

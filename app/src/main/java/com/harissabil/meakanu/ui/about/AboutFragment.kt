@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import coil.load
 import com.harissabil.meakanu.BuildConfig
 import com.harissabil.meakanu.R
 import com.harissabil.meakanu.databinding.FragmentAboutBinding
@@ -40,10 +41,16 @@ class AboutFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        val appIcon = requireContext().packageManager.getApplicationIcon("com.harissabil.meakanu")
+        binding.ivLogo.load(appIcon)
+
         binding.tvVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
 
         binding.cvPrivacy.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/harissabil/MeakanuPrivacyPolicy"))
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://github.com/harissabil/MeakanuPrivacyPolicy")
+            )
             startActivity(intent)
         }
     }

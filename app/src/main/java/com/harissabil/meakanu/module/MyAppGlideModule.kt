@@ -1,4 +1,4 @@
-package com.harissabil.meakanu.glide
+package com.harissabil.meakanu.module
 
 import android.content.Context
 import com.bumptech.glide.GlideBuilder

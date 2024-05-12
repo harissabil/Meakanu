@@ -45,9 +45,8 @@ class AgriFragment : Fragment() {
     ): View {
 
         _binding = FragmentAgriBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,6 +91,7 @@ class AgriFragment : Fragment() {
             adapter.loadStateFlow.collectLatest { loadStates ->
                 if (loadStates.refresh is LoadState.Loading) {
                     binding.progressBar.visibility = View.VISIBLE
+                    binding.llError.visibility = View.GONE
                 } else {
                     binding.progressBar.visibility = View.GONE
                     if (loadStates.refresh is LoadState.Error) {
@@ -116,6 +116,7 @@ class AgriFragment : Fragment() {
     private fun getData() {
         if (isNetworkAvailable()) {
             fetchData()
+            binding.llError.visibility = View.GONE
         } else {
             binding.progressBar.visibility = View.GONE
             binding.llError.visibility = View.VISIBLE
@@ -126,11 +127,14 @@ class AgriFragment : Fragment() {
     }
 
     private fun isNetworkAvailable(): Boolean {
-        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val networkCapabilities = connectivityManager.activeNetwork ?: return false
         val actNw = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
-        return actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+        return actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(
+            NetworkCapabilities.TRANSPORT_CELLULAR
+        )
     }
 
     override fun onDestroyView() {
