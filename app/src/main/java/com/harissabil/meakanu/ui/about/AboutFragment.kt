@@ -49,7 +49,7 @@ class AboutFragment : Fragment() {
         binding.cvPrivacy.setOnClickListener {
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://github.com/harissabil/MeakanuPrivacyPolicy")
+                Uri.parse("https://github.com/harissabil/Meakanu/blob/master/docs/privacy-policy.md")
             )
             startActivity(intent)
         }
