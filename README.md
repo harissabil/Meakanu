@@ -1,8 +1,7 @@
 <div align="center">
   <img src="https://github.com/harissabil/Meakanu/blob/master/app/src/main/ic_launcher-playstore.png" width="150" alt="Centered Image">
+  <h1>Meakanu: Plant Identifier</h1>
 </div>
-
-# Meakanu: Plant Identifier
 
 Explore the rich diversity of plants, leaves, flowers, fruits, and trees easily. Simply take a photo or upload an image of any plant you encounter, and let Meakanu work its magic. Within seconds, you'll receive accurate and detailed information about the plant's name, species, and key characteristics. Whether you're a gardening enthusiast, a hiker, or someone who appreciates the beauty of the natural world, Meakanu will elevate your experience. Learn and discover interesting facts about various plants.
 
