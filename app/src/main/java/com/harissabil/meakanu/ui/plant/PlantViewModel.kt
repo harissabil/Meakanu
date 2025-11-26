@@ -39,12 +39,17 @@ class PlantViewModel(private val repository: PlantRepository) : ViewModel() {
                 _searchResponse.postValue(response)
                 _isLoading.value = false
             } catch (e: HttpException) {
-                val jsonInString = e.response()?.errorBody()?.string()
-                val errorBody = Gson().fromJson(jsonInString, SearchResponseTrefle::class.java)
-                val errorMessage = errorBody.message
-                _isLoading.postValue(false)
-                _errorResponse.postValue(errorBody)
-                Log.d(TAG, "onError: $errorMessage")
+                try {
+                    val jsonInString = e.response()?.errorBody()?.string()
+                    val errorBody = Gson().fromJson(jsonInString, SearchResponseTrefle::class.java)
+                    val errorMessage = errorBody.message
+                    _isLoading.postValue(false)
+                    _errorResponse.postValue(errorBody)
+                    Log.d(TAG, "onError: $errorMessage")
+                } catch (e: Exception) {
+                    _isLoading.value = false
+                    _isError.value = true
+                }
             } catch (e: Exception) {
                 _isLoading.value = false
                 _isError.value = true
