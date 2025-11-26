@@ -134,7 +134,7 @@ dependencies {
     implementation("androidx.paging:paging-runtime-ktx:3.3.6")
 
     // uCrop
-    implementation("com.github.jens-muenker:uCrop-n-Edit:4.0.2")
+    implementation("com.github.jens-muenker:uCrop-n-Edit:4.1.1")
 
     // Browser
     implementation("androidx.browser:browser:1.9.0")
