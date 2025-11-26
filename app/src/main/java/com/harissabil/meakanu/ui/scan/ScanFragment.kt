@@ -7,10 +7,12 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -56,7 +58,7 @@ class ScanFragment : Fragment() {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
@@ -78,7 +80,7 @@ class ScanFragment : Fragment() {
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        if (it.resultCode == AppCompatActivity.RESULT_OK) {
+        if (it.resultCode == RESULT_OK) {
             val myFile = File(currentPhotoPath)
 
             myFile.let { file ->
@@ -91,52 +93,68 @@ class ScanFragment : Fragment() {
         }
     }
 
-    private val launcherIntentGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == AppCompatActivity.RESULT_OK) {
-            val selectedImg = result.data?.data as Uri
-            selectedImg.let { uri ->
-                val myFile = uriToFile(uri, requireContext())
-                getFile = myFile
+//    private val launcherIntentGallery = registerForActivityResult(
+//        ActivityResultContracts.StartActivityForResult()
+//    ) { result ->
+//        if (result.resultCode == AppCompatActivity.RESULT_OK) {
+//            val selectedImg = result.data?.data as Uri
+//            selectedImg.let { uri ->
+//                val myFile = uriToFile(uri, requireContext())
+//                getFile = myFile
+////                binding.ivPreview.setImageURI(uri)
+////                binding.ivPreview.tag = "updatedTag"
+//
+//                startCrop(Uri.fromFile(myFile))
+//            }
+//        }
+//    }
+
+    // Registers a photo picker activity launcher in single-select mode.
+    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        // Callback is invoked after the user selects a media item or closes the
+        // photo picker.
+        if (uri != null) {
+            val myFile = uriToFile(uri, requireContext())
+            getFile = myFile
 //                binding.ivPreview.setImageURI(uri)
 //                binding.ivPreview.tag = "updatedTag"
 
-                startCrop(Uri.fromFile(myFile))
+            startCrop(Uri.fromFile(myFile))
+        } else {
+            Log.d("Media Picker", "No media selected")
+        }
+    }
+
+//    @Deprecated("Deprecated in Java")
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+//            val imageUri: Uri = UCrop.getOutput(data!!)!!
+//            getFile = uriToFile(imageUri, requireContext())
+//            binding.ivPreview.setImageURI(imageUri)
+//            binding.ivPreview.tag = "updatedTag"
+//        } else if (resultCode == UCrop.RESULT_ERROR) {
+//            val cropError = UCrop.getError(data!!)
+//            Toast.makeText(requireContext(), cropError!!.message, Toast.LENGTH_LONG).show()
+//        }
+//    }
+
+    private val activityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val imageUri: Uri = UCrop.getOutput(result.data!!)!!
+                getFile = uriToFile(imageUri, requireContext())
+                binding.ivPreview.setImageURI(imageUri)
+                binding.ivPreview.tag = "updatedTag"
+            } else if (result.resultCode == UCrop.RESULT_ERROR) {
+                val cropError = UCrop.getError(result.data!!)
+                Toast.makeText(requireContext(), cropError!!.message, Toast.LENGTH_LONG).show()
             }
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
-            val imageUri: Uri = UCrop.getOutput(data!!)!!
-            getFile = uriToFile(imageUri, requireContext())
-            binding.ivPreview.setImageURI(imageUri)
-            binding.ivPreview.tag = "updatedTag"
-        } else if (resultCode == UCrop.RESULT_ERROR) {
-            val cropError = UCrop.getError(data!!)
-            Toast.makeText(requireContext(), cropError!!.message, Toast.LENGTH_LONG).show()
-        }
-    }
-
-//    private val activityResultLauncher =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            if (result.resultCode == RESULT_OK) {
-//                val imageUri: Uri = UCrop.getOutput(result.data!!)!!
-//                getFile = uriToFile(imageUri, requireContext())
-//                binding.ivPreview.setImageURI(imageUri)
-//                binding.ivPreview.tag = "updatedTag"
-//            } else if (result.resultCode == UCrop.RESULT_ERROR) {
-//                val cropError = UCrop.getError(result.data!!)
-//                Toast.makeText(requireContext(), cropError!!.message, Toast.LENGTH_LONG).show()
-//            }
-//        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentScanBinding.inflate(inflater, container, false)
         return binding.root
@@ -201,11 +219,12 @@ class ScanFragment : Fragment() {
     }
 
     private fun startGallery() {
-        val intent = Intent()
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose a Picture")
-        launcherIntentGallery.launch(chooser)
+//        val intent = Intent()
+//        intent.action = Intent.ACTION_GET_CONTENT
+//        intent.type = "image/*"
+//        val chooser = Intent.createChooser(intent, "Choose a Picture")
+//        launcherIntentGallery.launch(chooser)
+        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     private fun startCrop(uri: Uri) {
@@ -215,11 +234,16 @@ class ScanFragment : Fragment() {
         options.setToolbarColor(ContextCompat.getColor(requireContext(), R.color.green_500))
         options.setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.green_700))
         options.setToolbarWidgetColor(ContextCompat.getColor(requireContext(), R.color.white))
-        options.setActiveControlsWidgetColor(ContextCompat.getColor(requireContext(), R.color.green_500))
+        options.setActiveControlsWidgetColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.green_500
+            )
+        )
 
         UCrop.of(uri, destinationUri)
             .withOptions(options)
-            .start(requireContext(), this)
+            .start(requireContext(), activityResultLauncher)
     }
 
     private fun uploadImage() {
